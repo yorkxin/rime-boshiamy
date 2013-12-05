@@ -43,21 +43,23 @@
 
 3. 執行安裝程式：
 
-      ./install.sh
+   ```sh
+   ./install.sh
+   ```
 
    它會把 ibus 表格檔轉換成 RIME 字典檔，並且連同 schema 檔複製到 RIME 的用戶資料夾裡面。
 
 4. 要啟用嘸蝦米輸入法，必須在用戶資料夾的 `default.custom.yaml` 裡面打開：
 
-```yml
-# default.custom.yaml
+    ```yml
+    # default.custom.yaml
 
-patch:
-  schema_list:  # 對於列表類型，現在無有辦法指定如何添加、消除或單一修改某項，於是要在定製檔中將整個列表替換！
-    # 略
-    - schema: boshiamy_t  # 嘸蝦米中文模式
-    - schema: boshiamy_j  # 嘸蝦米日文模式
-```
+    patch:
+      schema_list:  # 對於列表類型，現在無有辦法指定如何添加、消除或單一修改某項，於是要在定製檔中將整個列表替換！
+        # 略
+        - schema: boshiamy_t  # 嘸蝦米中文模式
+        - schema: boshiamy_j  # 嘸蝦米日文模式
+    ```
 
 最後還要重新部署 (Deploy) RIME 輸入法。
 
