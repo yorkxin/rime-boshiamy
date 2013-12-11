@@ -5,7 +5,7 @@
 schema:
   schema_id: boshiamy_j
   name: 嘸蝦米（日文）
-  version: "0.1"
+  version: "0.2.0"
   author:
     - Yu-Cheng Chuang <ducksteven@gmail.com>
     - 劉重次（原嘸蝦米輸入法作者）
