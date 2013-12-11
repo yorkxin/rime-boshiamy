@@ -39,6 +39,7 @@ engine:
   segmentors:
     - matcher
     - abc_segmentor
+    - punct_segmentor
     - fallback_segmentor
   translators:
     - echo_translator
@@ -73,8 +74,8 @@ reverse_lookup:
   # prism: bopomofo # 打開這個的時候要在 dependencies 加入 bopomofo
 
   enable_completion: false
-  prefix: "`"
-  suffix: "'"
+  prefix: "';"
+  suffix: ""
 
   tips: 〔拼音〕
   # tips: 〔注音〕
@@ -106,5 +107,5 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
-    reverse_lookup: "`[a-z]*'?$"
+    reverse_lookup: "';[a-z]*'?$"
     # reverse_lookup: "`[a-z125890,.;\/-]*[6347 ]'$"
