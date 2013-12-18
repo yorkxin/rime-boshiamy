@@ -9,7 +9,7 @@
 case `uname -s` in
   "Darwin" )
     PLATFORM="mac"
-    RIME_HOME="~/Library/Rime"
+    RIME_HOME="$HOME/Library/Rime"
     ;;
   "Linux" )
     PLATFORM="linux"
