@@ -13,7 +13,7 @@ case `uname -s` in
     ;;
   "Linux" )
     PLATFORM="linux"
-    RIME_HOME="~/.config/ibus/rime/"
+    RIME_HOME="$HOME/.config/ibus/rime/"
     ;;
   *)
     PLATFORM="unknown"
