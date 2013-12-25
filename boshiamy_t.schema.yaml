@@ -11,8 +11,8 @@ schema:
     - 劉重次（原嘸蝦米輸入法作者）
   description: 嘸蝦米輸入法
   dependencies:
-    - luna_pinyin
-    # - bopomofo
+    - terra_pinyin
+    - bopomofo
 
 switches:
   - name: ascii_mode
@@ -68,23 +68,20 @@ translator:
     - "xlit|abcdefghijklmnopqrstuvwxyz,.'[]|ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ，．’〔〕"
 
 reverse_lookup:
-  # FIXME: 要改成用注音。
-  dictionary: luna_pinyin
-  # dictionary: terra_pinyin
-  # prism: bopomofo # 打開這個的時候要在 dependencies 加入 bopomofo
+  dictionary: terra_pinyin
+  prism: bopomofo # 打開這個的時候要在 dependencies 加入 bopomofo
 
   enable_completion: false
-  prefix: "';"
+  prefix: "`"
   suffix: ""
 
-  tips: 〔拼音〕
-  # tips: 〔注音〕
+  tips: 〔注音〕
   preedit_format:
-    - xform/([nl])v/$1ü/
-    - xform/([nl])ue/$1üe/
-    - xform/([jqxy])v/$1u/
+    # - xform/([nl])v/$1ü/
+    # - xform/([nl])ue/$1üe/
+    # - xform/([jqxy])v/$1u/
 
-    # - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
+    - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
   comment_format:
     - "xlit|abcdefghijklmnopqrstuvwxyz,.'[]|ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ，．’〔〕"
 
@@ -107,5 +104,5 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
-    reverse_lookup: "';[a-z]*'?$"
-    # reverse_lookup: "`[a-z125890,.;\/-]*[6347 ]'$"
+    # FIXME: 缺空白鍵
+    reverse_lookup: "`[abcdefghijklmnopqrstuvwxyz1234567890,.;/-]*'?$"
