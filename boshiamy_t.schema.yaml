@@ -105,4 +105,6 @@ recognizer:
   import_preset: default
   patterns:
     # FIXME: 缺空白鍵
+    # XXX: 不支援真正的 regexp ，不能寫 [a-z0-9] 這種形式
+    # XXX: 開頭若是 '; 反而 match 不到
     reverse_lookup: "`[abcdefghijklmnopqrstuvwxyz1234567890,.;/-]*'?$"
