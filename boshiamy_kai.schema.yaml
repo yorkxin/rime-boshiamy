@@ -1,0 +1,111 @@
+# 嘸蝦米輸入法（中文模式）
+# 
+# TODO: 注音反查
+# FIXME: 原版的空碼字的時候按空白，不會輸出文字，若要實裝的話，會與 URL recognizer 衝突
+schema:
+  schema_id: boshiamy_kai
+  name: 嘸蝦米・改
+  version: "0.3.0"
+  author:
+    - Yu-Cheng Chuang <ducksteven@gmail.com>
+    - 劉重次（原嘸蝦米輸入法作者）
+  description: 嘸蝦米輸入法
+  dependencies:
+    - luna_pinyin
+    # - bopomofo
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 漢字, 英數 ]
+  - name: full_shape
+    states: [ 半形, 全形 ]
+  - name: simplification
+    states: [ 繁體, 打繁出簡 ]
+  # TODO: 支援 EXT 區漢字，要擴充字典表。
+  # See: http://liu.twbbs.org/liuzmd1/liu.box/
+  # - name: extended_charset
+  #   states: [ 通用, EXT ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - echo_translator
+    - reverse_lookup_translator
+    - table_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+menu:
+  page_size: 10
+  alternative_select_keys: "0123456789"
+
+speller:
+  alphabet: "abcdefghijklmnopqrstuvwxyz,.'[]"
+  delimiter: ";" # 用於連打組句時， ambiguous 組合的切斷點
+  max_code_length: 5     # XXX: 沒作用？
+
+translator:
+  dictionary: boshiamy_t
+  enable_charset_filter: true # 可以把 EXT 區的漢字給過濾掉
+  enable_completion: false # 不提示後續按鍵的組字結果
+  enable_sentence: true # 連打組句
+  enable_user_dict: true # 使用者字頻調整機制。若打開的話則無法維持候選字順序。
+  preedit_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz,.'[]|ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ，．’〔〕"
+
+reverse_lookup:
+  # FIXME: 要改成用注音。
+  dictionary: luna_pinyin
+  # dictionary: terra_pinyin
+  # prism: bopomofo # 打開這個的時候要在 dependencies 加入 bopomofo
+
+  enable_completion: false
+  prefix: "';"
+  suffix: ""
+
+  tips: 〔拼音〕
+  # tips: 〔注音〕
+  preedit_format:
+    - xform/([nl])v/$1ü/
+    - xform/([nl])ue/$1üe/
+    - xform/([jqxy])v/$1u/
+
+    # - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
+  comment_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz,.'[]|ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ，．’〔〕"
+
+key_binder:
+  bindings:
+    - when: always
+      accept: Shift+space
+      toggle: full_shape
+    - when: always
+      accept: Control+Shift+4
+      toggle: simplification
+    # TODO: <> 換頁。
+    # - when: has_menu
+    #   accept: Shift+comma
+    #   send: Page_Up
+    # - when: has_menu
+    #   accept: Shift+period
+    #   send: Page_Down
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "';[a-z]*'?$"
+    # reverse_lookup: "`[a-z125890,.;\/-]*[6347 ]'$"
