@@ -35,6 +35,7 @@ function install_boshiamy() {
 
   if [[ -f $table_file ]]; then
     ./ibus2rime.sh $table_file
+    ./liubox2rime.sh $dict_file
 
     cp $dict_file $schema_file $RIME_HOME
 
