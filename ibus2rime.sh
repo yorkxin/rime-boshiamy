@@ -32,8 +32,7 @@ function create_rime_dict_file() {
   echo ''                              >> $RIME_DICT
   echo '---'                           >> $RIME_DICT
   echo "name: $FILE_NAME"              >> $RIME_DICT
-  # FIXME: 想辦法撈出表格檔版本，例如從 install.sh 裡面抓出 VERSION
-  echo 'version: "0.1"'                >> $RIME_DICT
+  echo "version: \"$VERSION\""         >> $RIME_DICT
   echo 'sort: original'                >> $RIME_DICT
   echo 'use_preset_vocabulary: false'  >> $RIME_DICT
   echo ''                              >> $RIME_DICT
@@ -42,6 +41,8 @@ function create_rime_dict_file() {
 
 DESCRIPTION=`SQLITE3 $1 'SELECT val FROM ime where attr = "description";' | sed -e 's/IBus/Rime/g'`
 echo $DESCRIPTION
+
+VERSION=`SQLITE3 $1 'SELECT val FROM ime where attr = "serial_number";'`
 
 create_rime_dict_file
 
