@@ -19,41 +19,7 @@ RIME_DICT="$FILE_NAME.dict.yaml"
 echo "Converting $FILE_NAME to $RIME_DICT ..."
 
 function translate_keys() {
-  # 暴力取代法來自 GCIN 同好會：
-  # http://cle.linux.org.tw/trac/wiki/GcinInstallBoshiamy
-  sed -e "s/00//g" \
-      -e "s/01/a/g" \
-      -e "s/02/b/g" \
-      -e "s/03/c/g" \
-      -e "s/04/d/g" \
-      -e "s/05/e/g" \
-      -e "s/06/f/g" \
-      -e "s/07/g/g" \
-      -e "s/08/h/g" \
-      -e "s/09/i/g" \
-      -e "s/10/j/g" \
-      -e "s/11/k/g" \
-      -e "s/12/l/g" \
-      -e "s/13/m/g" \
-      -e "s/14/n/g" \
-      -e "s/15/o/g" \
-      -e "s/16/p/g" \
-      -e "s/17/q/g" \
-      -e "s/18/r/g" \
-      -e "s/19/s/g" \
-      -e "s/20/t/g" \
-      -e "s/21/u/g" \
-      -e "s/22/v/g" \
-      -e "s/23/w/g" \
-      -e "s/24/x/g" \
-      -e "s/25/y/g" \
-      -e "s/26/z/g" \
-      -e "s/27/\'/g" \
-      -e "s/45/[/g" \
-      -e "s/46/]/g" \
-      -e "s/55/,/g" \
-      -e "s/56/./g" \
-      -e "s/;//g"
+	sed
 }
 
 function create_rime_dict_file() {
@@ -89,16 +55,7 @@ echo "Total entries: $total_entries"
 SQLITE3 -list $1 <<EOSQL | translate_keys >> $RIME_DICT
 .separator "\t"
 SELECT
-  phrase,
-  (
-    -- SQLite3 的 Left Padding （SUBSTR 大法）從這裡抄來的：
-    -- http://www.askingbox.com/info/sqlite-rpad-and-lpad-in-sqlite-fill-string-with-characters-left-or-right
-    SUBSTR('00' || IFNULL(m0, ''), -2, 2) || ';' ||
-    SUBSTR('00' || IFNULL(m1, ''), -2, 2) || ';' ||
-    SUBSTR('00' || IFNULL(m2, ''), -2, 2) || ';' ||
-    SUBSTR('00' || IFNULL(m3, ''), -2, 2) || ';' ||
-    SUBSTR('00' || IFNULL(m4, ''), -2, 2)
-  ) AS input
+  phrase, tabkeys
 FROM phrases
-ORDER BY input, freq DESC;
+ORDER BY tabkeys, freq DESC;
 EOSQL
