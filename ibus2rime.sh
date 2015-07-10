@@ -18,10 +18,6 @@ RIME_DICT="$FILE_NAME.dict.yaml"
 
 echo "Converting $FILE_NAME to $RIME_DICT ..."
 
-function translate_keys() {
-	sed
-}
-
 function create_rime_dict_file() {
   # clear the existing file
   echo "# $DESCRIPTION" > $RIME_DICT
@@ -52,7 +48,7 @@ create_rime_dict_file
 total_entries=`SQLITE3 $1 'SELECT COUNT(*) FROM phrases;'`
 echo "Total entries: $total_entries"
 
-SQLITE3 -list $1 <<EOSQL | translate_keys >> $RIME_DICT
+SQLITE3 -list $1 <<EOSQL >> $RIME_DICT
 .separator "\t"
 SELECT
   phrase, tabkeys
