@@ -35,7 +35,8 @@ function install_boshiamy() {
 
   if [[ -f $table_file ]]; then
     ./ibus2rime.sh $table_file
-
+    ./liubox2rime.sh $(echo $1 | awk 'BEGIN {FS="_"} {print $2}')
+    
     cp $dict_file $schema_file $RIME_HOME
 
     echo "$name -- \033[1;32m完成\033[m"
