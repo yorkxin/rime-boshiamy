@@ -48,6 +48,22 @@ function install_boshiamy() {
   fi
 }
 
+#Test Sqlite3 version
+#
+#@return 1 if it could be error in runtime.
+function testVersion() {
+  sqlite=`which sqlite3`
+  sqlVerTime=`$sqlite --version | awk {'print $2'}`
+  sqlVerTime=`date -j -f "%Y-%m-%d" "$sqlVerTime" "+%s"`
+  tabVerTime=`date -j -f "%Y-%m-%d" "2014-12-08" "+%s"`
+
+  if [[ $sqlVerTime < $tabVerTime ]]; then
+    echo 'SQLite Version is too old, it could be some error in runtime'
+    return 1
+  fi
+}
+
+testVersion
 install_boshiamy boshiamy_t
 install_boshiamy boshiamy_j
 
